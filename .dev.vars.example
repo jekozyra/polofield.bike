@@ -1,0 +1,28 @@
+# Names of every secret/var the worker reads from `c.env`. Copy this file
+# to `.dev.vars` and fill in the values for local development.
+#
+# The names here are also the source of truth for `wrangler types` — the
+# `generate-types` npm script points `--env-file` at this file so that
+# `worker-configuration.d.ts` includes them on the `Env` interface. `wrangler
+# deploy` does NOT read this file, so committing it does not touch production
+# secrets. Values in `.dev.vars` (git-ignored) shadow these for local dev.
+#
+# Production secrets are set via `wrangler secret bulk .dev.vars` or
+# `wrangler secret put <NAME>`.
+
+SLACK_APP_ID=
+SLACK_CLIENT_ID=
+SLACK_CLIENT_SECRET=
+SLACK_SIGNING_SECRET=
+SLACK_BOT_TOKEN=
+SLACK_CHANNEL_ID=
+DISCORD_PUBLIC_KEY=
+DISCORD_CLIENT_ID=
+DISCORD_CLIENT_SECRET=
+DISCORD_INVITE_URL=
+DISCORD_PERMISSIONS_INTEGER=
+DISCORD_TEST_GUILD_ID=
+DISCORD_TOKEN=
+DISCORD_WEBHOOK_URL=
+DISCORD_DIAGNOSTICS_WEBHOOK_URL=
+ADMIN_TOKEN=
