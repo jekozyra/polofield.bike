@@ -279,9 +279,7 @@ export async function postWebhookRow(
     throw new Error(`Unknown webhook type: ${params.type}`);
   }
   await env.DB.prepare(
-    `UPDATE daily_webhook_status
-       SET last_post_date = ?, last_post_at = ?, last_post_payload_json = ?, last_post_response_json = ?
-       WHERE webhook_url = ?`,
+    `UPDATE daily_webhook_status\n       SET last_post_date = ?, last_post_at = ?, last_post_payload_json = ?, last_post_response_json = ?\n       WHERE webhook_url = ?`,
   )
     .bind(
       shortDateStyle.format(tomorrow),
@@ -334,6 +332,13 @@ export async function handleCron(
   env: Bindings,
 ): Promise<void> {
   // await cronBody(env);
-  const workflow = await env.SCRAPE_POLO_WORKFLOW.create();
+  const workflow = await env.SCRAPE_POLO_WORKFLOW.create({
+    // Instances fire every 20 minutes, so successful runs are only useful
+    // for debugging briefly; keep errored runs around long enough to notice.
+    retention: {
+      successRetention: "1 hour",
+      errorRetention: "1 week",
+    },
+  });
   console.log(`Cron created workflow id ${workflow.id}`);
 }
