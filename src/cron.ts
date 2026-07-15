@@ -279,7 +279,9 @@ export async function postWebhookRow(
     throw new Error(`Unknown webhook type: ${params.type}`);
   }
   await env.DB.prepare(
-    `UPDATE daily_webhook_status\n       SET last_post_date = ?, last_post_at = ?, last_post_payload_json = ?, last_post_response_json = ?\n       WHERE webhook_url = ?`,
+    `UPDATE daily_webhook_status
+       SET last_post_date = ?, last_post_at = ?, last_post_payload_json = ?, last_post_response_json = ?
+       WHERE webhook_url = ?`,
   )
     .bind(
       shortDateStyle.format(tomorrow),
